@@ -18,7 +18,7 @@
 <div class="container mt-2">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h1 class="h5 mb-0">
+            <h1 class="h5 mb-0 fw-semibold">
                 Tasks
             </h1>
             <small>
@@ -72,7 +72,11 @@
             @foreach ($tasks as $task)
                 <tr>
                     <th scope="row">{{ $task->id }}</th>
-                    <td>{{ $task->title }}</td>
+                    <td>
+                        <a href="{{ route('tasks.show', ['task' => $task]) }}">
+                            {{ $task->title }}
+                        </a>
+                    </td>
                     <td>{{ $task->status }}</td>
                     <td>
                         <div>

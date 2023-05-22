@@ -13,3 +13,11 @@
       width: 50%;
     }
 }
+
+a, .btn-link {
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
