@@ -1,5 +1,19 @@
 @extends('layouts.app')
 
+@php
+    $statuses = [
+        'pending',
+        'progress',
+        'completed'
+    ];
+
+
+    $sorts = [
+        'created_at:asc' => 'Oldest first',
+        'created_at:desc' => 'Latest first'
+    ];
+@endphp
+
 @section('content')
 <div class="container mt-2">
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -13,14 +27,39 @@
         </div>
         <div>
             <a href={{ route('tasks.create') }} class="btn btn-primary">
-                Add Task
+                Add New Task
             </a>
         </div>
     </div>
 
-    {{ $tasks->appends(request()->all())->links() }}
+    <div class="d-flex justify-content-between mt-4">
+        <div>
+            <form method="GET" action={{ route('tasks.index') }} id="taskFilterForm">
+                <div class="input-group mb-3">
+                    <input type="text" name="q" value="{{ old('q') ?? request('q') }}" class="form-control" placeholder="Search..." aria-label="Search for title or description" aria-describedby="button-addon2">
+                    <select class="form-select" name="status">
+                        <option value="">Status...</option>
+                        @foreach ($statuses as $status)
+                            <option value="{{$status}}" {{ (old('status') ?? request('status')) === $status ? 'selected' : null }}>
+                                {{ ucfirst($status) }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <button class="btn btn-secondary" type="submit" id="button-addon2">Filter</button>
+                </div>
+            </form>
+        </div>
+        <div>
+            <select class="form-select" form="taskFilterForm" id="sortSelector" name="sort">
+                <option value="">Sorting...</option>
+                @foreach ($sorts as $value => $label)
+                    <option value="{{ $value }}" {{ (old('sort') ?? request('sort')) === $value ? 'selected' : null }}>{{ $label }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
 
-    <table class="table table-hover bg-white rounded shadow-sm mt-2 overflow-hidden">
+    <table class="table table-hover bg-white rounded shadow-sm overflow-hidden">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -72,4 +111,16 @@
 
     {{ $tasks->appends(request()->all())->links() }}
 </div>
+@endsection
+
+
+@section('scripts')
+    <script>
+        const sortSelector = document.getElementById("sortSelector");
+        const filterForm = document.getElementById('taskFilterForm');
+
+        sortSelector.addEventListener('change', function(event) {
+            filterForm.submit();
+        });
+    </script>
 @endsection

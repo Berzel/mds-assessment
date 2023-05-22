@@ -16,7 +16,7 @@ class TitleFilter
     public function handle(Builder $query, Closure $next)
     {
         if ($filter = request()->input('q')) {
-            $query->where('title', 'like', '%'.$filter.'%');
+            $query = $query->where('title', 'like', '%'.$filter.'%');
         }
 
         return $next($query);

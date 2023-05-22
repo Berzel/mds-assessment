@@ -16,7 +16,9 @@ class DescriptionFilter
     public function handle(Builder $query, Closure $next)
     {
         if ($filter = request()->input('q')) {
-            $query->where('description', 'like', '%'.$filter.'%');
+            $query = $query->orWhere(fn (Builder $query) =>
+                $query->where('description', 'like', '%'.$filter.'%')
+            );
         }
 
         return $next($query);

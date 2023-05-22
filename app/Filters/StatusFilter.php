@@ -18,7 +18,7 @@ class StatusFilter
         $filter = request()->input('status');
 
         if ($filter && in_array($filter, ['pending', 'progress', 'completed'])) {
-            $query = $query->where('status', $filter);
+            $query = $query->whereStatus($filter);
         }
 
         return $next($query);

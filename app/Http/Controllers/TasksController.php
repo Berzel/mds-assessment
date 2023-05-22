@@ -8,11 +8,9 @@ use App\Filters\TaskSorter;
 use App\Filters\TitleFilter;
 use App\Http\Requests\Tasks\CreateTaskRequest;
 use App\Http\Requests\Tasks\UpdateTaskRequest;
-use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -55,7 +53,7 @@ class TasksController extends Controller
             });
 
         return view('tasks.index', [
-            'tasks' => TaskResource::collection($tasks)
+            'tasks' => $tasks
         ]);
     }
 
