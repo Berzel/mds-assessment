@@ -10,4 +10,4 @@
 - run npm run build
 - run ./vendor/bin/sail up -d
 - run ./vendor/bin/sail artisan:migrate --seed
-- visit https://localhost and log in with username:test@example.com, password:password
+- visit http://localhost and log in with username:test@example.com, password:password
